@@ -1,10 +1,12 @@
 class ArticlesController < ApplicationController
+    before_action :set_article, only: [:show, :edit, :update]
+
     def index
         @articles = Article.all
     end
 
     def show
-        @article = Article.find(params[:id])
+        # id を取得して記事情報を表示
     end
 
     def new
@@ -22,11 +24,11 @@ class ArticlesController < ApplicationController
     end
 
     def edit
-        @article = Article.find params[:id]
+        # id を取得して記事情報を取得
     end
 
     def update
-        @article = Article.find(params[:id])
+        # id を取得して記事を特定し、内容を更新
         if @article.update(article_params)
             redirect_to article_path(@article), notice: '更新できました'
         else
@@ -44,5 +46,9 @@ class ArticlesController < ApplicationController
     private
     def article_params #フォームの入力内容
         params.require(:article).permit(:title, :content)
+    end
+
+    def set_article
+        @article = Article.find(params[:id])
     end
 end

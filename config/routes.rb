@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
   root to: 'articles#index'
-
-  resources :articles, only: [:show, :new, :create, :edit, :update, :destroy]
+  resources :articles #基本的なCRUD処理すべて
 end
