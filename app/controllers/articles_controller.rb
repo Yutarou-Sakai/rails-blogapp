@@ -33,7 +33,12 @@ class ArticlesController < ApplicationController
             flash.now[:error] = '更新できませんでした'
             render :edit
         end
+    end
 
+    def destroy
+        article = Article.find(params[:id])
+        article.destroy! #!マークで例外ができる
+        redirect_to root_path, notice: '削除しました'
     end
 
     private
