@@ -5,4 +5,6 @@ Rails.application.routes.draw do
   resources :articles do #基本的なCRUD処理すべて
     resources :comments, only: [:new, :create]
   end
+
+  resource :profile, only: [:show, :edit, :update]
 end
