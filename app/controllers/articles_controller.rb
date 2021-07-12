@@ -2,12 +2,12 @@ class ArticlesController < ApplicationController
     before_action :set_article, only: [:show]
     before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
 
-    def index
+    def index #記事一覧を表示
         @articles = Article.all
     end
 
-    def show
-        # id を取得して記事情報を表示
+    def show # id を取得して記事情報を表示
+        @comments = @article.comments
     end
 
     def new
