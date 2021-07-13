@@ -46,7 +46,7 @@ class ArticlesController < ApplicationController
 
     private
     def article_params #フォームの入力内容
-        params.require(:article).permit(:title, :content)
+        params.require(:article).permit(:title, :content, :eyecatch)
     end
 
     def set_article
