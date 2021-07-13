@@ -25,6 +25,7 @@ class Article < ApplicationRecord
     validate :validate_title_and_content_length
 
     has_many :comments, dependent: :destroy #この記事が削除されたら紐づくコメントも消す
+    has_many :likes, dependent: :destroy
     belongs_to :user #記事は必ずユーザーに所属している
 
     def display_created_at
