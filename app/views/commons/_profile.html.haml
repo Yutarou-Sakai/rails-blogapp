@@ -11,9 +11,9 @@
             = link_to '編集', edit_profile_path
           - else
             - if current_user&.has_followed?(user)
-              %p フォロー済み
+              = link_to 'unfollow', account_unfollows_path(user), data: { method: 'POST' }
             - else
-              = link_to 'フォロー', account_follows_path(user), data: { method: 'POST' }
+              = link_to 'follow', account_follows_path(user), data: { method: 'POST' }
       .profilePage_user_introduction
         = user.profile&.introduction
 
