@@ -10,7 +10,10 @@
           - if user == current_user
             = link_to '編集', edit_profile_path
           - else
-            = link_to 'フォロー', '#'
+            - if current_user&.has_followed?(user)
+              %p フォロー済み
+            - else
+              = link_to 'フォロー', account_follows_path(user), data: { method: 'POST' }
       .profilePage_user_introduction
         = user.profile&.introduction
 
