@@ -25,9 +25,23 @@ class User < ApplicationRecord
   has_many :articles, dependent: :destroy #このユーザーが削除されたら紐づく記事も消す
   has_many :likes, dependent: :destroy
   has_many :favorite_articles, through: :likes, source: :article
+
+  #自分（follower_id）がフォローしている人（following_id）を探す
+  #外部キー（follower_id）を設定する
+  has_many :following_relationships, foreign_key: 'follower_id', class_name: 'Relationship', dependent: :destroy
+  #（following_id）との関係を作る
+  has_many :followings, through: :following_relationships, source: :following
+
+  #自分（following_id）のフォロワー（follower_id）を探す
+  #外部キー（following_id）を設定する
+  has_many :follower_relationships, foreign_key: 'following_id', class_name: 'Relationship', dependent: :destroy
+  #（follower_id）との関係を作る
+  has_many :followers, through: :follower_relationships, source: :follower
+
   has_one :profile, dependent: :destroy
 
   delegate :birthday, :age, :gender, to: :profile, allow_nil: true
+
 
   def has_written?(article)
     articles.exists?(id: article.id)
@@ -46,11 +60,35 @@ class User < ApplicationRecord
     profile || build_profile
   end
 
+  def follow!(user)
+    user_id = get_user_id(user)
+    following_relationships.create!(following_id: user_id)
+  end
+
+  def unfollow!(user)
+    user_id = get_user_id(user)
+    relation = following_relationships.find_by!(following_id: user_id)
+    relation.destroy!
+  end
+
+  def has_followed?(user)
+    following_relationships.exists?(following_id: user.id)
+  end
+
   def avatar_image
     if profile&.avatar&.attached?
       profile.avatar
     else
       'default-avatar.png'
+    end
+  end
+
+  private
+  def get_user_id(user)
+    if user.is_a?(User)
+      user.id
+    else
+      user
     end
   end
 end
