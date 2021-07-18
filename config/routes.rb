@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   devise_for :users
   root to: 'articles#index'
 
+  resource :timeline, only: [:show]
+
   resources :articles do #基本的なCRUD処理すべて
     resources :comments, only: [:new, :create]
 
