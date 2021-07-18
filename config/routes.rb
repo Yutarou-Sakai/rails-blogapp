@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resource :timeline, only: [:show]
 
   resources :articles do #基本的なCRUD処理すべて
-    resources :comments, only: [:new, :create]
+    resources :comments, only: [:new, :index, :create]
 
     resource :like, only: [:show, :create, :destroy]
   end
