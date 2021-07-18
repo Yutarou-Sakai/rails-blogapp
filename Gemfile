@@ -23,6 +23,7 @@ gem 'jbuilder', '~> 2.7'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 gem 'annotate'
+gem 'active_decorator'
 gem 'aws-sdk-s3', require: false
 gem 'better_errors'
 gem 'binding_of_caller'
