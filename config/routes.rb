@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   resources :articles do #基本的なCRUD処理すべて
     resources :comments, only: [:new, :create]
 
-    resource :like, only: [:create, :destroy]
+    resource :like, only: [:show, :create, :destroy]
   end
 
   resources :accounts, only: [:show] do
