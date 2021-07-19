@@ -7,7 +7,6 @@ class ArticlesController < ApplicationController
     end
 
     def show # id を取得して記事情報を表示
-        @comments = @article.comments
     end
 
     def new
