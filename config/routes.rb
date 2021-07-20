@@ -6,19 +6,25 @@ Rails.application.routes.draw do
   devise_for :users
   root to: 'articles#index'
 
-  resource :timeline, only: [:show]
-
-  resources :articles do #基本的なCRUD処理すべて
-    resources :comments, only: [:new, :index, :create]
-
-    resource :like, only: [:show, :create, :destroy]
-  end
+  resources :articles
 
   resources :accounts, only: [:show] do
     resources :follows, only: [:create]
     resources :unfollows, only: [:create]
   end
 
-  resource :profile, only: [:show, :edit, :update]
-  resources :favorites, only: [:index]
+  
+  scope module: :apps do
+    resources :favorites, only: [:index]
+    resource :timeline, only: [:show]
+    resource :profile, only: [:show, :edit, :update]
+  end
+
+
+  namespace :api, defaults: {formt: :json} do
+    scope '/articles/:article_id' do
+      resources :comments, only: [:index, :create]
+      resource :like, only: [:show, :create, :destroy]
+    end
+  end
 end
